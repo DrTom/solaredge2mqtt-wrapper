@@ -1,0 +1,47 @@
+- name: install script template
+  template:
+    src: solaredge2mqtt
+    dest: "{{ solaredge2mqtt_working_directory }}/solaredge2mqtt"
+    owner: "{{ solaredge2mqtt_user }}"
+    group: "{{ solaredge2mqtt_user }}"
+    mode: 0755
+
+- name: config
+  file:
+    path: /etc/solaredge2mqtt
+    state: directory
+    mode: 0755
+
+- name: env config
+  template:
+    src: solaredge2mqtt.env
+    dest: "/etc/solaredge2mqtt/solaredge2mqtt.env"
+    owner: root
+    group: "{{ solaredge2mqtt_user }}"
+    mode: 0640
+
+- name: dot env link
+  file:
+    src: "/etc/solaredge2mqtt/solaredge2mqtt.env"
+    dest: "{{ solaredge2mqtt_working_directory }}/.env"
+    owner: "{{ solaredge2mqtt_user }}"
+    group: "{{ solaredge2mqtt_user }}"
+    mode: 0640
+
+- name: systemd service definition
+  template:
+    src: solaredge2mqtt.service
+    dest: "/etc/systemd/system/solaredge2mqtt.service"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: enable and start service
+  service:
+    name: solaredge2mqtt
+    enabled: yes
+    state: restarted

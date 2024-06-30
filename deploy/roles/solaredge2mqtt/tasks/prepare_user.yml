@@ -1,0 +1,19 @@
+- name: Add the group
+  group:
+    name: "{{solaredge2mqtt_user}}"
+    system: true
+
+- name: user
+  user:
+    name: "{{ solaredge2mqtt_user }}"
+    group: "{{ solaredge2mqtt_user }}"
+    system: yes
+    shell: /bin/bash
+    state: present
+
+- name: setup asdf
+  include_role:
+    name: asdf
+  vars:
+    asdf_user: '{{ solaredge2mqtt_user }}'
+

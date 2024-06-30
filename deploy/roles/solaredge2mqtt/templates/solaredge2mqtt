@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd {{ solaredge2mqtt_working_directory }}
+
+source ~/.asdf/asdf.sh
+source {{solaredge2mqtt_working_directory}}/.venv/bin/activate
+# source /etc/solaredge2mqtt/solaredge2mqtt.env
+
+solaredge2mqtt "$@"
+
+# vi: ft=sh

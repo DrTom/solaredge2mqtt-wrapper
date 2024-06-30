@@ -1,0 +1,12 @@
+name: HA/SolarEdge@MQTT-Wrapper
+windows:
+  1:
+    name: Git
+    command: |
+      git la
+  2:
+    name: local
+    command: |
+      SE2MQTT_MODBUS__HOST=SolarEdgeInverter \
+      SE2MQTT_MQTT__BROKER=localhost \
+      ./bin/solaredge2mqtt

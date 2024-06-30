@@ -1,0 +1,46 @@
+- name: make sure working dir exits
+  file:
+    path: "{{ solaredge2mqtt_working_directory }}"
+    state: directory
+    owner: "{{ solaredge2mqtt_user }}"
+    group: "{{ solaredge2mqtt_user }}"
+    mode: 0755
+
+- name: install python
+  become: yes
+  become_user: "{{ solaredge2mqtt_user }}"
+  shell: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+    source ~/.asdf/asdf.sh
+    asdf plugin-add python
+    asdf install python {{ solaredge2mqtt_python_version }}
+    asdf global python {{ solaredge2mqtt_python_version }}
+  args:
+    executable: /bin/bash
+    chdir: "{{ solaredge2mqtt_working_directory }}"
+
+- name: setup venv
+  become: yes
+  become_user: "{{ solaredge2mqtt_user }}"
+  shell: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+    python -m venv {{solaredge2mqtt_working_directory}}/.venv
+  args:
+    executable: /bin/bash
+    chdir: "{{ solaredge2mqtt_working_directory }}"
+
+
+- name: install solaredge2mqtt
+  become: yes
+  become_user: "{{ solaredge2mqtt_user }}"
+  shell: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+    source ~/.asdf/asdf.sh
+    source {{solaredge2mqtt_working_directory}}/.venv/bin/activate
+    pip install --upgrade solaredge2mqtt=={{ solaredge2mqtt_version }}
+  args:
+    executable: /bin/bash
+    chdir: "{{ solaredge2mqtt_working_directory }}"

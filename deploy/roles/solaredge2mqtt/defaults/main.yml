@@ -1,0 +1,6 @@
+solaredge2mqtt_user: "solaredge2mqtt"
+solaredge2mqtt_working_directory: "/opt/solaredge2mqtt"
+solaredge2mqtt_python_version: "3.11.6"
+solaredge2mqtt_inverter_host: SolarEdgeInverter
+solaredge2mqtt_mqtt_broker_host: hab
+solaredge2mqtt_version: '1.1.2'

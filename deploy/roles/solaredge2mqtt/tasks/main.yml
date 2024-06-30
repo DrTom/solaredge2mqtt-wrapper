@@ -1,0 +1,8 @@
+- name: setup user with asdf tools
+  include_tasks: prepare_user.yml
+
+- name: install
+  include_tasks: install.yml
+
+- name: service
+  include_tasks: service.yml

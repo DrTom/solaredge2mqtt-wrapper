@@ -1,0 +1,24 @@
+[Unit]
+Description=SolarEdge Modbus to MQTT Gateway
+After=network.target
+
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+
+[Service]
+WorkingDirectory={{solaredge2mqtt_working_directory}}
+User={{solaredge2mqtt_user}}
+Group={{solaredge2mqtt_user}}
+
+Restart=always
+RestartSec=5
+
+ExecStart={{solaredge2mqtt_working_directory}}/solaredge2mqtt
+
+
+[Install]
+WantedBy=multi-user.target
+
+
+# vi: ft=systemd
