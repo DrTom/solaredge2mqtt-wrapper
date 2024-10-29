@@ -13,6 +13,7 @@ Group={{solaredge2mqtt_user}}
 
 Restart=always
 RestartSec=5
+RuntimeMaxSec=15m
 
 ExecStart={{solaredge2mqtt_working_directory}}/solaredge2mqtt
 
