@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd {{ solaredge2mqtt_working_directory }}
+PROJECT_DIR="$(cd -- "$(dirname "${BASH_SOURCE}")" ; cd .. > /dev/null 2>&1 && pwd -P)"
 
 source ~/.asdf/asdf.sh
-source {{solaredge2mqtt_working_directory}}/.venv/bin/activate
-# source /etc/solaredge2mqtt/solaredge2mqtt.env
 
-solaredge2mqtt "$@"
+source $PROJECT_DIR/.venv/bin/activate
+
+export PYTHONPATH="$PROJECT_DIR/solaredge2mqtt:${PYTHONPATH:-}"
+#export PYTHONPATH="$PROJECT_DIR/solaredge2mqtt"
+
+
+python -m solaredge2mqtt "$@"
+
 
 # vi: ft=sh

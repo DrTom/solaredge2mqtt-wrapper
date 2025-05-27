@@ -1,7 +1,14 @@
+- name: make sure bin directory exists
+  file:
+    path: "{{ solaredge2mqtt_working_directory }}/bin"
+    state: directory
+    owner: "{{ solaredge2mqtt_user }}"
+    group: "{{ solaredge2mqtt_user }}"
+
 - name: install script template
   template:
     src: solaredge2mqtt
-    dest: "{{ solaredge2mqtt_working_directory }}/solaredge2mqtt"
+    dest: "{{ solaredge2mqtt_working_directory }}/bin/solaredge2mqtt"
     owner: "{{ solaredge2mqtt_user }}"
     group: "{{ solaredge2mqtt_user }}"
     mode: 0755

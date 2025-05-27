@@ -31,8 +31,15 @@
     executable: /bin/bash
     chdir: "{{ solaredge2mqtt_working_directory }}"
 
+# this is very slow, consider to use the ansible sync module
+- name: copy solaredge2mqtt submodule over
+  copy:
+    src: "{{ playbook_dir }}/../solaredge2mqtt"
+    dest: "{{ solaredge2mqtt_working_directory }}"
+    owner: "{{ solaredge2mqtt_user }}"
+  # when: false
 
-- name: install solaredge2mqtt
+- name: install dependencies
   become: yes
   become_user: "{{ solaredge2mqtt_user }}"
   shell: |
@@ -40,7 +47,8 @@
     set -euo pipefail
     source ~/.asdf/asdf.sh
     source {{solaredge2mqtt_working_directory}}/.venv/bin/activate
-    pip install --upgrade solaredge2mqtt=={{ solaredge2mqtt_version }}
+    pip install -r  {{ solaredge2mqtt_working_directory }}/solaredge2mqtt/requirements.txt
   args:
     executable: /bin/bash
     chdir: "{{ solaredge2mqtt_working_directory }}"
+
